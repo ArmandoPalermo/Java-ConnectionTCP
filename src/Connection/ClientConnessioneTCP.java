@@ -35,7 +35,13 @@ public class ClientConnessioneTCP {
             connection = new Socket(serverAddress, port);
             System.out.println("Connessione aperta");
             BufferedReader inputClient= new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader inputClienRispServer= new BufferedReader(new InputStreamReader(connection.getInputStream()));
             BufferedWriter outputClient= new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
+            System.out.println("Scrivi il messaggio da inviare al server");
+            String messaggio=inputClient.readLine();
+            outputClient.write(messaggio);
+            outputClient.flush();
+            System.out.println(inputClienRispServer.readLine());
         }
         catch(ConnectException e){
             System.err.println("Server non disponibile!");
