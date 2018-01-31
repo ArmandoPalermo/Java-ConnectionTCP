@@ -6,10 +6,9 @@
 package Connection;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.net.ConnectException;
@@ -35,13 +34,13 @@ public class ClientConnessioneTCP {
             connection = new Socket(serverAddress, port);
             System.out.println("Connessione aperta");
             BufferedReader inputClient= new BufferedReader(new InputStreamReader(System.in));
-            BufferedReader inputClienRispServer= new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            BufferedWriter outputClient= new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
+            BufferedReader inputClientRispServer= new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            PrintStream outputClient= new PrintStream(connection.getOutputStream());
             System.out.println("Scrivi il messaggio da inviare al server");
             String messaggio=inputClient.readLine();
-            outputClient.write(messaggio);
+            outputClient.println(messaggio);
             outputClient.flush();
-            System.out.println(inputClienRispServer.readLine());
+            System.out.println(inputClientRispServer.readLine());
         }
         catch(ConnectException e){
             System.err.println("Server non disponibile!");
