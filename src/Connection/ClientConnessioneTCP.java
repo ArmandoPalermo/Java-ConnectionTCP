@@ -5,7 +5,11 @@
  */
 package Connection;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.net.ConnectException;
@@ -30,6 +34,8 @@ public class ClientConnessioneTCP {
         try{
             connection = new Socket(serverAddress, port);
             System.out.println("Connessione aperta");
+            BufferedReader tastiera= new BufferedReader(new InputStreamReader(System.in));
+            BufferedWriter output= new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
         }
         catch(ConnectException e){
             System.err.println("Server non disponibile!");
