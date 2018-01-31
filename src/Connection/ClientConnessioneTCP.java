@@ -34,8 +34,8 @@ public class ClientConnessioneTCP {
         try{
             connection = new Socket(serverAddress, port);
             System.out.println("Connessione aperta");
-            BufferedReader tastiera= new BufferedReader(new InputStreamReader(System.in));
-            BufferedWriter output= new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
+            BufferedReader inputClient= new BufferedReader(new InputStreamReader(System.in));
+            BufferedWriter outputClient= new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
         }
         catch(ConnectException e){
             System.err.println("Server non disponibile!");
