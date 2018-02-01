@@ -31,7 +31,7 @@ public class ServerConnessioneTCP {
         String messaggioInput= "",messaggioOutput = "";
         boolean a=true;
 
-        while(a){//controllo booleana per il ciclo
+        while(a){//controllo booleana per il ciclo finchè non il client invia exit
             try{
                 // il server si mette in ascolto sulla porta voluta
                 sSocket = new ServerSocket(port);
@@ -44,10 +44,9 @@ public class ServerConnessioneTCP {
                 BufferedReader inputServer= new BufferedReader(new InputStreamReader(connection.getInputStream()));//prende in input il messaggio inviato dal client(non avviene più la lettura da tastiera)
                 PrintStream outputServer= new PrintStream(connection.getOutputStream());
                 messaggioInput=inputServer.readLine();
-                System.out.print(messaggioInput+"\n");//messaggio debug
                 
                 switch(messaggioInput){
-                    case "exit":
+                    case "chiudi":
                         messaggioOutput="ciao ciao";
                         connection.close();
                         a=false;
@@ -57,7 +56,7 @@ public class ServerConnessioneTCP {
                         break;
                 }
                 outputServer.println(messaggioOutput);
-                outputServer.flush();
+                outputServer.flush();//svuoto lo stream e invio il messaggio
             }
                catch(IOException e){
                    System.err.println("Errore di I/O!");

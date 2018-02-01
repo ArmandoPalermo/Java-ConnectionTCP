@@ -33,14 +33,14 @@ public class ClientConnessioneTCP {
         try{
             connection = new Socket(serverAddress, port);
             System.out.println("Connessione aperta");
-            BufferedReader inputClient= new BufferedReader(new InputStreamReader(System.in));
-            BufferedReader inputClientRispServer= new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            BufferedReader inputClient= new BufferedReader(new InputStreamReader(System.in));//Input da tastiera
+            BufferedReader inputClientRispServer= new BufferedReader(new InputStreamReader(connection.getInputStream()));//Stream per gestione della risposta del server
             PrintStream outputClient= new PrintStream(connection.getOutputStream());
             System.out.println("Scrivi il messaggio da inviare al server");
             String messaggio=inputClient.readLine();
             outputClient.println(messaggio);
             outputClient.flush();
-            System.out.println(inputClientRispServer.readLine());
+            System.out.println(inputClientRispServer.readLine());//stampo la risposta del server
         }
         catch(ConnectException e){
             System.err.println("Server non disponibile!");
