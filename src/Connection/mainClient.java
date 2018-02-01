@@ -12,7 +12,8 @@ package Connection;
 public class mainClient {
     
     public static void main(String[] args) {
-        
+        ClientConnessioneTCP c=new ClientConnessioneTCP();
+        c.avviaConnessione();
     }
     
 }

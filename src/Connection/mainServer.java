@@ -12,7 +12,8 @@ package Connection;
 public class mainServer {
     
     public static void main(String[] args) {
-        
+        ServerConnessioneTCP s= new ServerConnessioneTCP();
+        s.inAscolto();
     }
     
 }

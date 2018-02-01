@@ -36,7 +36,7 @@ public class ServerConnessioneTCP {
                 System.out.println("Connessione stabilita!");
                 System.out.println("Socket server: " + connection.getLocalSocketAddress());
                 System.out.println("Socket client: " + connection.getRemoteSocketAddress());
-                this.rispondi(sSocket,connection);
+                this.rispondi(sSocket,connection);//richiamo il metodo per effettuare la risposta al client
                 
             }
                catch(IOException e){
@@ -50,9 +50,9 @@ public class ServerConnessioneTCP {
             try{
                 BufferedReader inputServer= new BufferedReader(new InputStreamReader(connection.getInputStream()));//prende in input il messaggio inviato dal client(non avviene più la lettura da tastiera)
                 PrintStream outputServer= new PrintStream(connection.getOutputStream());
-                while(!"ciao ciao".equals(messaggioOutput)){
+                while(!"ciao ciao".equals(messaggioOutput)){//ciclo finchè il messaggio che restituisce il server è quello di chiusura
                     messaggioInput=inputServer.readLine();
-                    switch(messaggioInput){
+                    switch(messaggioInput){//controllo del messaggio di input con la quale si definisce la risposta da definire
                             case "chiudi":
                                 messaggioOutput="ciao ciao";
                                 break;
@@ -67,7 +67,7 @@ public class ServerConnessioneTCP {
                         outputServer.flush();//svuoto lo stream e invio il messaggio
                         System.out.println(messaggioOutput);
                 }
-                this.chiudiConnessione(sSocket);
+                this.chiudiConnessione(sSocket);//richiamo la chiusura della connessione una volta finito lo scambio di messaggi
             }catch(IOException e){
                    System.err.println("Errore di I/O!");
             }

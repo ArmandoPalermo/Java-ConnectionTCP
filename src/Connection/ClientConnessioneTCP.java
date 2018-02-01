@@ -40,10 +40,10 @@ public class ClientConnessioneTCP {
 
                 connection = new Socket(serverAddress, porta);
                 System.out.println("Connessione aperta");
-                this.scriviMessaggio(connection);
+                this.scriviMessaggio(connection);//richiamo il metodo che permette di scrivere un messaggio al server
                
             }
-            catch(ConnectException e){
+            catch(ConnectException e){//gestione dele eccezioni
                 System.err.println("Server non disponibile!");
             }
             catch(UnknownHostException e1){
@@ -64,13 +64,13 @@ public class ClientConnessioneTCP {
                 PrintStream outputClient= new PrintStream(connection.getOutputStream());
                 while(!"chiudi".equals(messaggio)){
                     System.out.println("Scrivi un messaggio da inoltrare al server");
-                    messaggio=inputClient.readLine();
+                    messaggio=inputClient.readLine();//primo input da tastiera del client
                     outputClient.println(messaggio);
                     outputClient.flush();
-                    String rispostaServer=inputClientRispServer.readLine();
+                    String rispostaServer=inputClientRispServer.readLine();//lettura della risposta inviata dal server
                     System.out.println(rispostaServer);//stampo la risposta del server
                 }
-                this.chiudiConnessione(connection);
+                this.chiudiConnessione(connection);//chiusura connessione una volta finito lo scambio di messagi tra client e server
             } catch (IOException ex) {
                 Logger.getLogger(ClientConnessioneTCP.class.getName()).log(Level.SEVERE, null, ex);
             }
