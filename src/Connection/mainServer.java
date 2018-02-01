@@ -3,19 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.connectiontcp;
+package Connection;
 
 /**
  *
- * @author Administrator
+ * @author Armando Palermo
  */
-public class JavaConnectionTCP {
-
-    /**
-     * @param args the command line arguments
-     */
+public class mainServer {
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+        
     }
     
 }
