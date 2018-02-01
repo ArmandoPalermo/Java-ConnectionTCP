@@ -70,6 +70,7 @@ public class ClientConnessioneTCP {
                     String rispostaServer=inputClientRispServer.readLine();
                     System.out.println(rispostaServer);//stampo la risposta del server
                 }
+                this.chiudiConnessione(connection);
             } catch (IOException ex) {
                 Logger.getLogger(ClientConnessioneTCP.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -77,7 +78,16 @@ public class ClientConnessioneTCP {
         }
         
         //chiusura della connessione in seguito all'invio del messaggio "chiudi"
-        void chiudiConnessione(){
-        
+        void chiudiConnessione(Socket connection){
+                try {
+                    if (connection!=null)
+                        {
+                            connection.close();
+                            System.out.println("Connessione chiusa!");
+                        }
+                    }
+                catch(IOException e){
+                    System.err.println("Errore nella chiusura della connessione!");
+                }
         }
 }
