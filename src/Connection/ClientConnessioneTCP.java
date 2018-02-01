@@ -34,11 +34,10 @@ public class ClientConnessioneTCP {
        void avviaConnessione(){
            
             Socket connection = null;
-            String serverAddress = "localhost";
             
              try{
 
-                connection = new Socket(serverAddress, porta);
+                connection = new Socket(indirizzoServer, porta);
                 System.out.println("Connessione aperta");
                 this.scriviMessaggio(connection);//richiamo il metodo che permette di scrivere un messaggio al server
                
