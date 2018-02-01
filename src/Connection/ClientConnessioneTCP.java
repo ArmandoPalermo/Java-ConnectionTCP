@@ -28,44 +28,54 @@ public class ClientConnessioneTCP {
         String serverAddress = "localhost";
         //porta del server in ascolto
         int port = 2000;
+        boolean a=true;
 
-        //apertura della connessione al server sulla porta specificata
-        try{
-            connection = new Socket(serverAddress, port);
-            System.out.println("Connessione aperta");
-            BufferedReader inputClient= new BufferedReader(new InputStreamReader(System.in));//Input da tastiera
-            BufferedReader inputClientRispServer= new BufferedReader(new InputStreamReader(connection.getInputStream()));//Stream per gestione della risposta del server
-            PrintStream outputClient= new PrintStream(connection.getOutputStream());
-            System.out.println("Scrivi il messaggio da inviare al server");
-            String messaggio=inputClient.readLine();
-            outputClient.println(messaggio);
-            outputClient.flush();
-            System.out.println(inputClientRispServer.readLine());//stampo la risposta del server
-        }
-        catch(ConnectException e){
-            System.err.println("Server non disponibile!");
-        }
-        catch(UnknownHostException e1){
-            System.err.println("Errore DNS!");
-        }
+        while(a){//controllo booleana per il ciclo finchè non il client invia exit
 
-        catch(IOException e2){//
-            System.err.println(e2);
-            e2.printStackTrace();
-        }
+            //apertura della connessione al server sulla porta specificata
+            try{
 
-        //chiusura della connnessione
-        finally{
-                try {
-            if (connection!=null)
-                {
-                    connection.close();
-                    System.out.println("Connessione chiusa!");
+                connection = new Socket(serverAddress, port);
+                System.out.println("Connessione aperta");
+                BufferedReader inputClient= new BufferedReader(new InputStreamReader(System.in));//Input da tastiera
+                BufferedReader inputClientRispServer= new BufferedReader(new InputStreamReader(connection.getInputStream()));//Stream per gestione della risposta del server
+                PrintStream outputClient= new PrintStream(connection.getOutputStream());
+                System.out.println("Scrivi il messaggio da inviare al server");
+                String messaggio=inputClient.readLine();
+                outputClient.println(messaggio);
+                outputClient.flush();
+                String rispostaServer=inputClientRispServer.readLine();
+                System.out.println(rispostaServer);//stampo la risposta del server
+                //controllo per fine connessione ed uscita dal while
+                if(rispostaServer.equals("ciao ciao")){
+                    a=false;
                 }
             }
-            catch(IOException e){
-                System.err.println("Errore nella chiusura della connessione!");
+            catch(ConnectException e){
+                System.err.println("Server non disponibile!");
+            }
+            catch(UnknownHostException e1){
+                System.err.println("Errore DNS!");
+            }
+
+            catch(IOException e2){//
+                System.err.println(e2);
+                e2.printStackTrace();
+            }
+
+            //chiusura della connnessione
+            finally{
+                    try {
+                if (connection!=null)
+                    {
+                        connection.close();
+                        System.out.println("Connessione chiusa!");
+                    }
+                }
+                catch(IOException e){
+                    System.err.println("Errore nella chiusura della connessione!");
+                }
             }
         }
-    }
+    } 
 }

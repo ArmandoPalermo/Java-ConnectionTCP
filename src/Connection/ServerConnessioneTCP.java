@@ -48,15 +48,18 @@ public class ServerConnessioneTCP {
                 switch(messaggioInput){
                     case "chiudi":
                         messaggioOutput="ciao ciao";
-                        connection.close();
                         a=false;
                         break;
                     case "ciao":
                         messaggioOutput ="salve";
                         break;
+                    case "come stai":
+                        messaggioOutput ="bene";
+                        break;
                 }
                 outputServer.println(messaggioOutput);
                 outputServer.flush();//svuoto lo stream e invio il messaggio
+                System.out.println(messaggioOutput);
             }
                catch(IOException e){
                    System.err.println("Errore di I/O!");
@@ -70,5 +73,5 @@ public class ServerConnessioneTCP {
             }
             System.out.println("Connessione chiusa!");
         }
-      }
+     }
 }
