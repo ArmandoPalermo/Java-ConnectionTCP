@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -62,8 +64,12 @@ public class ServerConnessioneTCP {
                             case "ciao":
                                 messaggioOutput ="salve";
                                 break;
-                            case "come stai":
+                            case "come stai?":
                                 messaggioOutput ="bene";
+                                break;
+                            case "data"://restituzione data 
+                                GregorianCalendar data =  new GregorianCalendar();
+                                messaggioOutput=data.get(Calendar.DATE)+"/"+(data.get(Calendar.MONTH)+1)+"/" + data.get(Calendar.YEAR); //MONTH+1 in modo da comunicare correttamente i mesi
                                 break;
                         }
                         outputServer.println(messaggioOutput);
