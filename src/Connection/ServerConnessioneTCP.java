@@ -25,7 +25,7 @@ public class ServerConnessioneTCP {
            connection=null;
         }
         //metodo che fa si che il server passi in modalità "Ascolto" sulla porta inserita come parametro del metodo
-        public Socket inAscolto(int porta){
+        public void inAscolto(int porta){
             ServerSocket sSocket = null;
             
             try{
@@ -42,7 +42,7 @@ public class ServerConnessioneTCP {
                catch(IOException e){
                    System.err.println("Errore di I/O!");
             }
-			return connection;
+			
         }
         
         //risposta server da inoltrare al client

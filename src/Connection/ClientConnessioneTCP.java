@@ -30,7 +30,7 @@ public class ClientConnessioneTCP {
        
        
        //metodo che avvia la connessione con il server
-       public Socket avviaConnessione(String indirizzoServer, int porta){
+       public void avviaConnessione(String indirizzoServer, int porta){
            
             
              try{
@@ -49,7 +49,6 @@ public class ClientConnessioneTCP {
                  System.err.println("Errore I/O");
              }
 			 
-			return connection;
        }
        
        
