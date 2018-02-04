@@ -17,44 +17,47 @@ import java.net.Socket;
  * @author Armando Palermo
  */
 public class ServerConnessioneTCP {
-        private final int porta;
-
+        private Socket connection;
+        private ServerSocket connessioneServer;
+		
         ServerConnessioneTCP(){
-            porta=2100;
+           connessioneServer=null;
+           connection=null;
         }
-        //metodo che fa si che il server passi in modalità "Ascolto" sulla porta 2100
-        void inAscolto(){
+        //metodo che fa si che il server passi in modalità "Ascolto" sulla porta inserita come parametro del metodo
+        public Socket inAscolto(int porta){
             ServerSocket sSocket = null;
-            Socket connection;
             
             try{
                 // il server si mette in ascolto sulla porta voluta
-                sSocket = new ServerSocket(porta);
+                connessioneServer = new ServerSocket(porta);
                 System.out.println("In attesa di connessioni!");
                 //si è stabilita la connessione
-                connection = sSocket.accept();
+                this.connection = connessioneServer.accept();
                 System.out.println("Connessione stabilita!");
                 System.out.println("Socket server: " + connection.getLocalSocketAddress());
                 System.out.println("Socket client: " + connection.getRemoteSocketAddress());
-                this.rispondi(sSocket,connection);//richiamo il metodo per effettuare la risposta al client
                 
             }
                catch(IOException e){
                    System.err.println("Errore di I/O!");
             }
+			return connection;
         }
         
         //risposta server da inoltrare al client
-        void rispondi(ServerSocket sSocket,Socket connection){
+        public void rispondi(){
+	    boolean a = true;
             String messaggioInput="" , messaggioOutput = "";
             try{
-                BufferedReader inputServer= new BufferedReader(new InputStreamReader(connection.getInputStream()));//prende in input il messaggio inviato dal client(non avviene più la lettura da tastiera)
-                PrintStream outputServer= new PrintStream(connection.getOutputStream());
-                while(!"ciao ciao".equals(messaggioOutput)){//ciclo finchè il messaggio che restituisce il server è quello di chiusura
+                BufferedReader inputServer= new BufferedReader(new InputStreamReader(this.connection.getInputStream()));//prende in input il messaggio inviato dal client(non avviene più la lettura da tastiera)
+                PrintStream outputServer= new PrintStream(this.connection.getOutputStream());
+                while(a){
                     messaggioInput=inputServer.readLine();
                     switch(messaggioInput){//controllo del messaggio di input con la quale si definisce la risposta da definire
                             case "chiudi":
                                 messaggioOutput="ciao ciao";
+				a=false;
                                 break;
                             case "ciao":
                                 messaggioOutput ="salve";
@@ -67,16 +70,16 @@ public class ServerConnessioneTCP {
                         outputServer.flush();//svuoto lo stream e invio il messaggio
                         System.out.println(messaggioOutput);
                 }
-                this.chiudiConnessione(sSocket);//richiamo la chiusura della connessione una volta finito lo scambio di messaggi
             }catch(IOException e){
                    System.err.println("Errore di I/O!");
             }
+		
         }
         
         //chiusura della connessione in seguito all'invio del messaggio "chiudi"
-        void chiudiConnessione(ServerSocket sSocket){
+        void chiudiConnessione(){
             try {
-                if (sSocket!=null) sSocket.close();
+                if (this.connessioneServer!=null) this.connessioneServer.close();
             } catch (IOException ex) {
                 System.err.println("Errore nella chiusura della connessione!");
             }

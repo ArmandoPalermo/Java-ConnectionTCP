@@ -21,25 +21,22 @@ import java.util.logging.Logger;
  * @author Armando Palermo
  */
 public class ClientConnessioneTCP {
-        private final int porta;
-        private final String indirizzoServer;
+        Socket connection;
+        
         
        ClientConnessioneTCP(){
-           porta=2100;
-           indirizzoServer="localhost";
+           connection=null;
        }
        
        
        //metodo che avvia la connessione con il server
-       void avviaConnessione(){
+       public Socket avviaConnessione(String indirizzoServer, int porta){
            
-            Socket connection = null;
             
              try{
 
-                connection = new Socket(indirizzoServer, porta);
+                this.connection = new Socket(indirizzoServer, porta);
                 System.out.println("Connessione aperta");
-                this.scriviMessaggio(connection);//richiamo il metodo che permette di scrivere un messaggio al server
                
             }
             catch(ConnectException e){//gestione dele eccezioni
@@ -51,37 +48,42 @@ public class ClientConnessioneTCP {
             catch(IOException e2){
                  System.err.println("Errore I/O");
              }
+			 
+			return connection;
        }
        
        
        //scrittura messaggio da inoltrare al server
-        void scriviMessaggio(Socket connection){
+        public void scriviMessaggio(){
+            boolean a=true;
             String messaggio="";
             try {
                 BufferedReader inputClient= new BufferedReader(new InputStreamReader(System.in));//Input da tastiera
-                BufferedReader inputClientRispServer= new BufferedReader(new InputStreamReader(connection.getInputStream()));//Stream per gestione della risposta del server
-                PrintStream outputClient= new PrintStream(connection.getOutputStream());
-                while(!"chiudi".equals(messaggio)){
+                BufferedReader inputClientRispServer= new BufferedReader(new InputStreamReader(this.connection.getInputStream()));//Stream per gestione della risposta del server
+                PrintStream outputClient= new PrintStream(this.connection.getOutputStream());
+                
+                while(a){
                     System.out.println("Scrivi un messaggio da inoltrare al server");
                     messaggio=inputClient.readLine();//primo input da tastiera del client
                     outputClient.println(messaggio);
                     outputClient.flush();
                     String rispostaServer=inputClientRispServer.readLine();//lettura della risposta inviata dal server
                     System.out.println(rispostaServer);//stampo la risposta del server
+                    if("chiudi".equals(messaggio)){
+                        a=false;
+                    }
                 }
-                this.chiudiConnessione(connection);//chiusura connessione una volta finito lo scambio di messagi tra client e server
             } catch (IOException ex) {
                 Logger.getLogger(ClientConnessioneTCP.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
         }
         
         //chiusura della connessione in seguito all'invio del messaggio "chiudi"
-        void chiudiConnessione(Socket connection){
+        void chiudiConnessione(){
                 try {
-                    if (connection!=null)
+                    if (this.connection!=null)
                         {
-                            connection.close();
+                            this.connection.close();
                             System.out.println("Connessione chiusa!");
                         }
                     }
