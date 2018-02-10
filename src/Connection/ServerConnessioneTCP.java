@@ -69,7 +69,11 @@ public class ServerConnessioneTCP {
                                 break;
                             case "data"://restituzione data 
                                 GregorianCalendar data =  new GregorianCalendar();
-                                messaggioOutput=data.get(Calendar.DATE)+"/"+(data.get(Calendar.MONTH)+1)+"/" + data.get(Calendar.YEAR); //MONTH+1 in modo da comunicare correttamente i mesi
+                                messaggioOutput=data.get(Calendar.DATE)+"/"+(data.get(Calendar.MONTH)+1)+"/" + data.get(Calendar.YEAR)
+                                        +"  "+data.get(Calendar.HOUR)+":"+data.get(Calendar.MINUTE)+":"+data.get(Calendar.SECOND); //MONTH+1 in modo da comunicare correttamente i mesi
+                                break;
+                            default:
+                                messaggioOutput="Non sono in grado di rispondere";
                                 break;
                         }
                         outputServer.println(messaggioOutput);
