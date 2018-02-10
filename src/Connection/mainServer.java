@@ -5,8 +5,6 @@
  */
 package Connection;
 
-import java.net.Socket;
-
 /**
  *
  * @author Armando Palermo
@@ -14,10 +12,8 @@ import java.net.Socket;
 public class mainServer {
     
     public static void main(String[] args) {
-                ServerConnessioneTCP s= new ServerConnessioneTCP();
-                s.inAscolto(2000);
-		s.rispondi();
-		s.chiudiConnessione();
+               ServerConnessioneTCP server=new ServerConnessioneTCP();
+               server.start();
     }
     
 }

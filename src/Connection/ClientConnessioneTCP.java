@@ -7,7 +7,6 @@ package Connection;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ConnectException;
@@ -20,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author Armando Palermo
  */
-public class ClientConnessioneTCP {
+public class ClientConnessioneTCP extends Thread {
         Socket connection;
         
         
@@ -28,6 +27,13 @@ public class ClientConnessioneTCP {
            connection=null;
        }
        
+       
+        @Override
+        public void run(){
+            avviaConnessione("localhost",2000);
+            scriviMessaggio();
+            chiudiConnessione();
+        }
        
        //metodo che avvia la connessione con il server
        public void avviaConnessione(String indirizzoServer, int porta){

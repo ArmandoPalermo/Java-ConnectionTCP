@@ -5,7 +5,7 @@
  */
 package Connection;
 
-import java.net.Socket;
+
 
 /**
  *
@@ -14,10 +14,8 @@ import java.net.Socket;
 public class mainClient {
     
     public static void main(String[] args) {
-        ClientConnessioneTCP c=new ClientConnessioneTCP();
-        c.avviaConnessione("localhost",2000);
-        c.scriviMessaggio();
-	c.chiudiConnessione();
+         ClientConnessioneTCP client=new ClientConnessioneTCP();
+         client.start();
     }
     
 }

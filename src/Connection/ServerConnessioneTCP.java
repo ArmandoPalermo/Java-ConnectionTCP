@@ -18,7 +18,7 @@ import java.util.GregorianCalendar;
  *
  * @author Armando Palermo
  */
-public class ServerConnessioneTCP {
+public class ServerConnessioneTCP extends Thread {
         private Socket connection;
         private ServerSocket connessioneServer;
 		
@@ -26,6 +26,15 @@ public class ServerConnessioneTCP {
            connessioneServer=null;
            connection=null;
         }
+        
+        
+        @Override
+        public void run(){
+            inAscolto(2000);
+            rispondi();
+            chiudiConnessione();
+        }
+        
         //metodo che fa si che il server passi in modalità "Ascolto" sulla porta inserita come parametro del metodo
         public void inAscolto(int porta){
             ServerSocket sSocket = null;
